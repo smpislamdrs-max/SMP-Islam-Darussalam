@@ -283,11 +283,26 @@
     <div class="text-center mb-8 fade-up">
       <p class="text-aksen-400 font-semibold text-sm tracking-widest uppercase">Portal Siswa</p>
       <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">Cek Nilai & Absensi</h2>
-      <p class="text-white/75 text-sm mt-2">Masukkan NISN siswa untuk melihat data nilai ujian dan persentase kehadiran.
+      <p class="text-white/75 text-sm mt-2">Pilih tahun pelajaran dan semester terlebih dahulu, lalu masukkan NISN untuk melihat nilai per mata pelajaran serta rekap kehadiran (izin, sakit, alpa) beserta persentase kehadiran.</p>
     </div>
-    <form id="formNilai" class="flex flex-col sm:flex-row gap-3">
-      <input name="nisn" required type="text" placeholder="Masukkan NISN, contoh: 2024001"
-        class="flex-1 rounded-xl px-4 py-3 text-slate-800 outline-none focus:ring-4 focus:ring-white/30" />
+    <form id="formNilai" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
+      <div>
+        <label class="block text-xs text-white/70 mb-1 font-medium">Tahun Pelajaran</label>
+        <select name="tahun_pelajaran" id="tahunPelajaran" required class="w-full rounded-xl px-3 py-3 text-slate-800 text-sm outline-none focus:ring-4 focus:ring-white/30">
+          <option value="">Memuat...</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-white/70 mb-1 font-medium">Semester</label>
+        <select name="semester" id="semester" required class="w-full rounded-xl px-3 py-3 text-slate-800 text-sm outline-none focus:ring-4 focus:ring-white/30">
+          <option value="">Memuat...</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-white/70 mb-1 font-medium">NISN</label>
+        <input name="nisn" required type="text" inputmode="numeric" placeholder="Masukkan NISN siswa"
+          class="w-full rounded-xl px-3 py-3 text-slate-800 text-sm outline-none focus:ring-4 focus:ring-white/30" />
+      </div>
       <button type="submit" id="btnNilai" class="inline-flex items-center justify-center gap-2 bg-aksen-500 hover:bg-aksen-600 font-semibold px-6 py-3 rounded-xl transition">
         <i data-lucide="search" class="w-4 h-4"></i> Cek Data
       </button>
@@ -672,6 +687,31 @@ document.getElementById('formPPDB').addEventListener('submit', async function (e
 /* ============================================================
    5. CEK NILAI SISWA BERDASARKAN NISN
    ============================================================ */
+/* Muat daftar tahun pelajaran & semester (dari tb_nilai_mapel) untuk dropdown */
+async function muatPeriode() {
+  const thnEl = document.getElementById('tahunPelajaran');
+  const smtEl = document.getElementById('semester');
+  try {
+    const hasil = await apiGet({ action: 'daftarPeriode' });
+    const list = (hasil && hasil.data) || [];
+    if (!list.length) {
+      thnEl.innerHTML = '<option value="">Belum ada data</option>';
+      smtEl.innerHTML = '<option value="">Belum ada data</option>';
+      return;
+    }
+    const tahunUnik = [], smtUnik = [];
+    list.forEach(function (p) {
+      if (tahunUnik.indexOf(p.tahun_pelajaran) === -1) tahunUnik.push(p.tahun_pelajaran);
+      if (smtUnik.indexOf(p.semester) === -1) smtUnik.push(p.semester);
+    });
+    thnEl.innerHTML = tahunUnik.map(function (t) { return '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>'; }).join('');
+    smtEl.innerHTML = smtUnik.map(function (s) { return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + '</option>'; }).join('');
+  } catch (err) {
+    thnEl.innerHTML = '<option value="">Gagal memuat periode</option>';
+    smtEl.innerHTML = '<option value="">Gagal memuat periode</option>';
+  }
+}
+
 document.getElementById('formNilai').addEventListener('submit', async function (e) {
   e.preventDefault();
   const btn = document.getElementById('btnNilai');
@@ -681,21 +721,63 @@ document.getElementById('formNilai').addEventListener('submit', async function (
   hasilBox.innerHTML = '';
 
   try {
-    const nisn = e.target.nisn.value.trim();
-    const hasil = await apiGet({ action: 'cekNilai', nisn: nisn });
+    const f = e.target;
+    const nisn = f.nisn.value.trim();
+    const thn = f.tahun_pelajaran.value;
+    const smt = f.semester.value;
+    const hasil = await apiGet({ action: 'cekNilai', nisn: nisn, tahun_pelajaran: thn, semester: smt });
 
-    if (hasil && hasil.ditemukan) {
-      const d = hasil.data;
+    if (hasil && hasil.status === 'error') {
+      hasilBox.innerHTML = '<div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-center"><p class="font-medium">' + escapeHtml(hasil.pesan) + '</p></div>';
+    } else if (hasil && hasil.ditemukan) {
+      const sw = hasil.siswa;
+      const ab = hasil.absensi || {};
+      const persen = (ab.persentase != null) ? ab.persentase + '%' : '-';
+
+      // Kartu nilai per mata pelajaran (warna sesuai nilai)
+      var kartuNilai = '';
+      if (hasil.nilai && hasil.nilai.length) {
+        kartuNilai = hasil.nilai.map(function (m) {
+          var warna = m.nilai >= 85 ? 'text-brand-700' : (m.nilai >= 75 ? 'text-slate-800' : 'text-red-600');
+          return '<div class="flex items-center justify-between bg-slate-50 rounded-lg px-4 py-3 border border-slate-100">' +
+            '<span class="text-sm text-slate-600">' + escapeHtml(m.mata_pelajaran) + '</span>' +
+            '<span class="font-display font-bold text-lg ' + warna + '">' + m.nilai + '</span></div>';
+        }).join('');
+      } else {
+        kartuNilai = '<p class="text-sm text-slate-400 text-center py-3 col-span-full">Belum ada nilai pada periode ini.</p>';
+      }
+      var rataTeks = (hasil.rata_rata != null) ? hasil.rata_rata : '-';
+
       hasilBox.innerHTML =
-        '<div class="bg-white text-slate-800 rounded-2xl p-6 shadow-xl">' +
-          '<div class="flex items-center gap-3 mb-4">' +
-            '<span class="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="user-check" class="w-6 h-6"></i></span>' +
-            '<div><h3 class="font-display font-bold text-xl">' + escapeHtml(d.Nama) + '</h3>' +
-            '<p class="text-sm text-slate-500">NISN: ' + escapeHtml(d.NISN) + ' &middot; Kelas ' + escapeHtml(d.Kelas) + '</p></div>' +
+        '<div class="bg-white text-slate-800 rounded-2xl p-6 shadow-xl space-y-5">' +
+          // Identitas siswa + periode
+          '<div class="flex items-center gap-3 pb-4 border-b border-slate-100">' +
+            '<span class="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center shrink-0"><i data-lucide="user-check" class="w-6 h-6"></i></span>' +
+            '<div>' +
+              '<h3 class="font-display font-bold text-xl">' + escapeHtml(sw.nama) + '</h3>' +
+              '<p class="text-sm text-slate-500">NISN ' + escapeHtml(sw.nisn) + ' &middot; Kelas ' + escapeHtml(sw.kelas) + '</p>' +
+              '<p class="text-xs text-brand-600 font-medium mt-0.5">TP ' + escapeHtml(sw.tahun_pelajaran) + ' &middot; Semester ' + escapeHtml(sw.semester) + '</p>' +
+            '</div>' +
           '</div>' +
-          '<div class="grid grid-cols-2 gap-3">' +
-            '<div class="bg-brand-50 rounded-xl p-4 text-center"><p class="text-xs text-slate-500 uppercase tracking-wide">Nilai Ujian</p><p class="font-display font-bold text-3xl text-brand-700 mt-1">' + escapeHtml(d.Nilai_Ujian) + '</p></div>' +
-            '<div class="bg-aksen-400/15 rounded-xl p-4 text-center"><p class="text-xs text-slate-500 uppercase tracking-wide">Absensi</p><p class="font-display font-bold text-3xl text-aksen-600 mt-1">' + escapeHtml(d.Absensi) + '</p></div>' +
+          // Persentase kehadiran + rekap izin/sakit/alpa
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">' +
+            '<div class="bg-brand-50 rounded-xl p-4 text-center flex flex-col justify-center">' +
+              '<p class="text-xs text-slate-500 uppercase tracking-wide">Persentase Kehadiran</p>' +
+              '<p class="font-display font-bold text-4xl text-brand-700 mt-1">' + persen + '</p>' +
+              '<p class="text-xs text-slate-400 mt-1">Total ' + (ab.total_hari || 0) + ' hari efektif</p>' +
+            '</div>' +
+            '<div class="grid grid-cols-4 gap-2">' +
+              '<div class="bg-slate-50 rounded-lg p-2 text-center"><p class="font-display font-bold text-lg text-slate-700">' + (ab.hadir || 0) + '</p><p class="text-[10px] uppercase tracking-wide text-slate-400">Hadir</p></div>' +
+              '<div class="bg-blue-50 rounded-lg p-2 text-center"><p class="font-display font-bold text-lg text-blue-600">' + (ab.izin || 0) + '</p><p class="text-[10px] uppercase tracking-wide text-slate-400">Izin</p></div>' +
+              '<div class="bg-amber-50 rounded-lg p-2 text-center"><p class="font-display font-bold text-lg text-amber-600">' + (ab.sakit || 0) + '</p><p class="text-[10px] uppercase tracking-wide text-slate-400">Sakit</p></div>' +
+              '<div class="bg-red-50 rounded-lg p-2 text-center"><p class="font-display font-bold text-lg text-red-600">' + (ab.alpa || 0) + '</p><p class="text-[10px] uppercase tracking-wide text-slate-400">Alpa</p></div>' +
+            '</div>' +
+          '</div>' +
+          // Nilai per mata pelajaran + rata-rata
+          '<div>' +
+            '<p class="text-sm font-semibold text-slate-700 mb-2 flex items-center justify-between flex-wrap gap-2">Nilai per Mata Pelajaran ' +
+              '<span class="text-xs font-normal text-slate-400">Rata-rata: <span class="font-display font-bold text-brand-700 text-base">' + rataTeks + '</span></span></p>' +
+            '<div class="grid sm:grid-cols-2 gap-2">' + kartuNilai + '</div>' +
           '</div>' +
         '</div>';
     } else {
@@ -703,7 +785,6 @@ document.getElementById('formNilai').addEventListener('submit', async function (
         '<div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-center">' +
           '<i data-lucide="alert-circle" class="w-8 h-8 mx-auto mb-2 text-aksen-400"></i>' +
           '<p class="font-medium">' + escapeHtml((hasil && hasil.pesan) || 'NISN tidak ditemukan.') + '</p>' +
-          '<p class="text-white/70 text-sm mt-1">Coba NISN </p>' +
         '</div>';
     }
     lucide.createIcons();
@@ -774,6 +855,7 @@ document.querySelectorAll('.fade-up').forEach(function (el) { observer.observe(e
    ============================================================ */
 lucide.createIcons();
 muatPengaturan();   // identitas sekolah (nama, logo, alamat, visi-misi, dll)
+muatPeriode();      // isi dropdown tahun pelajaran & semester
 muatBerita();
 muatPengumuman();
 muatGaleri();
