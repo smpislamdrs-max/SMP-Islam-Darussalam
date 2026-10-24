@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SMP Islam Darussalam - Website Resmi</title>
+<title>Sekolah Modern Nusantara - Website Resmi</title>
 
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -53,10 +53,10 @@
 <nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 transition-shadow">
   <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
     <a href="#beranda" class="flex items-center gap-2">
-      <span class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center">
+      <span id="logoNav" class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 overflow-hidden">
         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
       </span>
-      <span class="font-display font-semibold text-lg text-brand-800">SMP Islam<span class="text-aksen-500"> Darussalam</span></span>
+      <span id="brandNama" class="font-display font-semibold text-lg text-brand-800">Sekolah Modern Nusantara</span>
     </a>
     <!-- Menu desktop -->
     <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
@@ -95,14 +95,14 @@
   <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/10"></div>
   <div class="absolute bottom-0 left-1/3 w-56 h-56 rounded-full bg-aksen-400/20"></div>
   <div class="relative max-w-6xl mx-auto px-4 py-20 md:py-28 text-white">
-    <p class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-sm px-4 py-1.5 rounded-full mb-5">
+    <p id="heroBadge" class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-sm px-4 py-1.5 rounded-full mb-5">
       <i data-lucide="sparkles" class="w-4 h-4"></i> Penerimaan Peserta Didik Baru Tahun Ajaran 2026/2027 Dibuka
     </p>
-    <h1 class="font-display font-bold text-4xl md:text-6xl leading-tight max-w-3xl">
+    <h1 id="heroJudul" class="font-display font-bold text-4xl md:text-6xl leading-tight max-w-3xl">
       Membangun Generasi Cerdas, Berkarakter, dan Siap Bersaing
     </h1>
-    <p class="mt-5 text-lg text-white/85 max-w-2xl">
-      SMP Islam Darussalam menyediakan pendidikan berkualitas dengan fasilitas lengkap,
+    <p id="heroSub" class="mt-5 text-lg text-white/85 max-w-2xl">
+      Sekolah Modern Nusantara menyediakan pendidikan berkualitas dengan fasilitas lengkap,
       guru profesional, dan kurikulum berbasis teknologi.
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
@@ -116,16 +116,16 @@
     <!-- Statistik singkat -->
     <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl">
       <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
-        <p class="font-display font-bold text-3xl">500+</p><p class="text-white/80 text-sm">Siswa Aktif</p>
+        <p id="statSiswa" class="font-display font-bold text-3xl">500+</p><p class="text-white/80 text-sm">Siswa Aktif</p>
       </div>
       <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
-        <p class="font-display font-bold text-3xl">40+</p><p class="text-white/80 text-sm">Guru Profesional</p>
+        <p id="statGuru" class="font-display font-bold text-3xl">40+</p><p class="text-white/80 text-sm">Guru Profesional</p>
       </div>
       <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
-        <p class="font-display font-bold text-3xl">15</p><p class="text-white/80 text-sm">Ekstrakurikuler</p>
+        <p id="statEkskul" class="font-display font-bold text-3xl">15</p><p class="text-white/80 text-sm">Ekstrakurikuler</p>
       </div>
       <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
-        <p class="font-display font-bold text-3xl">A</p><p class="text-white/80 text-sm">Akreditasi</p>
+        <p id="statAkreditasi" class="font-display font-bold text-3xl">A</p><p class="text-white/80 text-sm">Akreditasi</p>
       </div>
     </div>
   </div>
@@ -144,8 +144,8 @@
           <i data-lucide="school" class="w-6 h-6"></i>
         </span>
         <h3 class="font-display font-semibold text-xl mb-2">Tentang Sekolah</h3>
-        <p class="text-slate-600 text-sm leading-relaxed">
-          Berdiri sejak 2004, SMP Islam Darussalam berkomitmen menghadirkan pendidikan
+        <p id="tentangTeks" class="text-slate-600 text-sm leading-relaxed">
+          Berdiri sejak 1985, Sekolah Modern Nusantara berkomitmen menghadirkan pendidikan
           holistik yang memadukan ilmu pengetahuan, teknologi, dan pembentukan karakter mulia.
         </p>
       </div>
@@ -154,7 +154,7 @@
           <i data-lucide="eye" class="w-6 h-6"></i>
         </span>
         <h3 class="font-display font-semibold text-xl mb-2">Visi</h3>
-        <p class="text-slate-600 text-sm leading-relaxed">
+        <p id="visiTeks" class="text-slate-600 text-sm leading-relaxed">
           Menjadi sekolah unggulan yang menghasilkan lulusan beriman, cerdas, terampil,
           dan berwawasan global untuk menghadapi tantangan masa depan.
         </p>
@@ -164,9 +164,9 @@
           <i data-lucide="target" class="w-6 h-6"></i>
         </span>
         <h3 class="font-display font-semibold text-xl mb-2">Misi</h3>
-        <ul class="text-slate-600 text-sm leading-relaxed list-disc pl-5 space-y-1">
+        <ul id="misiList" class="text-slate-600 text-sm leading-relaxed list-disc pl-5 space-y-1">
           <li>Menyelenggarakan pembelajaran aktif dan kreatif.</li>
-          <li>Mengembangkan potensi akademik & non-akademik siswa.</li>
+          <li>Mengembangkan potensi akademik &amp; non-akademik siswa.</li>
           <li>Menanamkan nilai-nilai karakter dan religius.</li>
           <li>Memanfaatkan teknologi dalam proses belajar.</li>
         </ul>
@@ -239,11 +239,11 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-          <input name="email" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="smpislamdrs@gmail.com" />
+          <input name="email" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="email@contoh.com" />
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">No. HP / WhatsApp</label>
-          <input name="nohp" type="tel" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="085846294736" />
+          <input name="nohp" type="tel" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="08xxxxxxxxxx" />
         </div>
       </div>
 
@@ -307,9 +307,9 @@
         akan kami terima dengan baik untuk kemajuan bersama.
       </p>
       <div class="mt-6 space-y-4 text-sm">
-        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="map-pin" class="w-4 h-4"></i></span> Blok Sindanghurip RT 002 RW 004 Desa Maniis Kec. Cingambul Kab. Majalengka - Jawa Barat</p>
-        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4"></i></span> (021) 555-1234</p>
-        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="mail" class="w-4 h-4"></i></span> info@sekolahmodern.sch.id</p>
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4"></i></span><span id="kontakAlamat">Jl. Pendidikan No. 123, Jakarta Selatan</span></p>
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-4 h-4"></i></span><span id="kontakTelepon">(021) 555-1234</span></p>
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-4 h-4"></i></span><span id="kontakEmail">info@sekolahmodern.sch.id</span></p>
       </div>
     </div>
 
@@ -339,8 +339,10 @@
   <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
     <div>
       <div class="flex items-center gap-2 mb-3">
-        <span class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4"></i></span>
-        <span class="font-display font-semibold text-white">SMP Islam Darussalam</span>
+        <span id="logoFooter" class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0 overflow-hidden">
+          <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+        </span>
+        <span id="footerNama" class="font-display font-semibold text-white">Sekolah Modern Nusantara</span>
       </div>
       <p class="text-slate-400 leading-relaxed">Membangun generasi cerdas dan berkarakter melalui pendidikan berkualitas.</p>
     </div>
@@ -355,12 +357,14 @@
     </div>
     <div>
       <p class="font-semibold text-white mb-3">Jam Operasional</p>
-      <p class="text-slate-400">Senin - Jumat: 07.00 - 16.00 WIB</p>
-      <p class="text-slate-400">Sabtu: 07.00 - 12.00 WIB</p>
+      <div id="jamOperasional">
+        <p class="text-slate-400">Senin - Jumat: 07.00 - 16.00 WIB</p>
+        <p class="text-slate-400">Sabtu: 07.00 - 12.00 WIB</p>
+      </div>
     </div>
   </div>
   <div class="max-w-6xl mx-auto px-4 mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
-    &copy; 2026 SMP Islam Darussalam. Dibangun dengan Google Apps Script & GitHub Pages.
+    &copy; 2026 <span id="footerCopyright">Sekolah Modern Nusantara</span>. Dibangun dengan Google Apps Script &amp; GitHub Pages.
   </div>
 </footer>
 
@@ -417,10 +421,6 @@ function fileToBase64(file) {
 
 /* ------------------------------------------------------------
    Helper: kompresi gambar (untuk file berukuran besar)
-   Mengubah gambar ke canvas lalu di-resize max 1200px,
-   dikonversi ke JPEG kualitas 80% -> ukuran jauh lebih kecil.
-   Mengembalikan {base64, tipe, nama}. File non-gambar (PDF)
-   dikonversi apa adanya dengan batas 5 MB.
    ------------------------------------------------------------ */
 const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5 MB
 
@@ -430,7 +430,6 @@ async function prosesFile(file, label) {
     throw new Error('File ' + label + ' terlalu besar (>5 MB).');
   }
   if (file.type.startsWith('image/')) {
-    // Kompresi gambar via canvas
     const dataUrl = await new Promise((resolve, reject) => {
       const img = new Image();
       const url = URL.createObjectURL(file);
@@ -452,7 +451,6 @@ async function prosesFile(file, label) {
     });
     return { label, nama: label.toLowerCase().replace(/\s+/g,'_') + '.jpg', tipe: 'image/jpeg', base64: dataUrl.split(',')[1] };
   } else {
-    // PDF / dokumen lain -> base64 langsung
     const b64 = await fileToBase64(file);
     return { label, nama: file.name, tipe: file.type || 'application/octet-stream', base64: b64 };
   }
@@ -468,6 +466,86 @@ function tampilkanPesan(el, teks, sukses) {
 }
 
 /* ============================================================
+   0. MUAT PENGATURAN / IDENTITAS SEKOLAH (dari tb_pengaturan)
+   Semua teks identitas bisa diubah di spreadsheet.
+   Jika fetch gagal / nilai kosong -> pakai default di HTML.
+   ============================================================ */
+async function muatPengaturan() {
+  try {
+    const hasil = await apiGet({ action: 'pengaturan' });
+    const p = (hasil && hasil.data) || {};
+
+    // Helper: set textContent hanya jika nilai tidak kosong
+    const setTeks = function (id, val) {
+      if (!val || !String(val).trim()) return;
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setTeks('brandNama', p.nama_sekolah);
+    setTeks('footerNama', p.nama_sekolah);
+    setTeks('footerCopyright', p.nama_sekolah);
+    if (p.nama_sekolah && String(p.nama_sekolah).trim()) {
+      document.title = p.nama_sekolah.trim() + ' - Website Resmi';
+    }
+    setTeks('heroBadge', p.hero_badge);
+    setTeks('heroJudul', p.hero_judul);
+    setTeks('heroSub', p.hero_subjudul);
+    setTeks('tentangTeks', p.tentang_sekolah);
+    setTeks('visiTeks', p.visi);
+    setTeks('statSiswa', p.stat_siswa);
+    setTeks('statGuru', p.stat_guru);
+    setTeks('statEkskul', p.stat_ekskul);
+    setTeks('statAkreditasi', p.stat_akreditasi);
+    setTeks('kontakAlamat', p.alamat);
+    setTeks('kontakTelepon', p.telepon);
+    setTeks('kontakEmail', p.email);
+
+    // Misi: satu poin per baris (split newline)
+    if (p.misi && String(p.misi).trim()) {
+      const ul = document.getElementById('misiList');
+      if (ul) {
+        const poin = String(p.misi).split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+        ul.innerHTML = poin.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('');
+      }
+    }
+
+    // Jam operasional: satu baris per jadwal
+    if (p.jam_operasional && String(p.jam_operasional).trim()) {
+      const box = document.getElementById('jamOperasional');
+      if (box) {
+        const jadwal = String(p.jam_operasional).split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+        box.innerHTML = jadwal.map(function (t) { return '<p class="text-slate-400">' + escapeHtml(t) + '</p>'; }).join('');
+      }
+    }
+
+    // Logo: jika logo_url diisi, ganti ikon default dengan gambar.
+    // Jika gambar gagal dimuat, otomatis kembali ke ikon topi wisuda.
+    if (p.logo_url && String(p.logo_url).trim()) {
+      const urlLogo = String(p.logo_url).trim();
+      ['logoNav', 'logoFooter'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const img = document.createElement('img');
+        img.src = urlLogo;
+        img.alt = 'Logo Sekolah';
+        img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block';
+        img.addEventListener('error', function () {
+          el.style.background = '';
+          el.innerHTML = '<i data-lucide="graduation-cap" class="' + (id === 'logoNav' ? 'w-5 h-5' : 'w-4 h-4') + '"></i>';
+          lucide.createIcons();
+        });
+        el.style.background = 'transparent';
+        el.innerHTML = '';
+        el.appendChild(img);
+      });
+    }
+  } catch (err) {
+    // Gagal ambil pengaturan -> biarkan tampil nilai default hardcoded di HTML
+  }
+}
+
+/* ============================================================
    1. MUAT BERITA
    ============================================================ */
 async function muatBerita() {
@@ -476,7 +554,7 @@ async function muatBerita() {
     const hasil = await apiGet({ action: 'berita' });
     const list = (hasil && hasil.data) || [];
     if (!list.length) { grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center">Belum ada berita.</p>'; return; }
-    grid.innerHTML = list.map(b => {
+    grid.innerHTML = list.map(function (b) {
       const foto = b.Foto_URL && String(b.Foto_URL).trim();
       const media = foto
         ? '<img src="' + escapeHtml(foto) + '" alt="" loading="lazy" class="w-full h-44 object-cover" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" /><div class="img-placeholder w-full h-44 items-center justify-center hidden"><i data-lucide="image" class="w-8 h-8 text-white/70"></i></div>'
@@ -504,16 +582,16 @@ async function muatPengumuman() {
     const hasil = await apiGet({ action: 'pengumuman' });
     const list = (hasil && hasil.data) || [];
     if (!list.length) { box.innerHTML = '<p class="text-slate-400 text-sm">Belum ada pengumuman aktif.</p>'; return; }
-    box.innerHTML = list.map(p =>
-      '<div class="flex items-start gap-4 bg-amber-50/60 border border-amber-100 rounded-xl p-4">' +
+    box.innerHTML = list.map(function (p) {
+      return '<div class="flex items-start gap-4 bg-amber-50/60 border border-amber-100 rounded-xl p-4">' +
         '<span class="w-10 h-10 shrink-0 rounded-lg bg-aksen-400/20 text-aksen-600 flex items-center justify-center"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>' +
         '<div>' +
           '<h3 class="font-semibold text-slate-900">' + escapeHtml(p.Judul) + '</h3>' +
           '<p class="text-slate-600 text-sm mt-1 leading-relaxed">' + escapeHtml(p.Isi) + '</p>' +
           '<p class="text-xs text-slate-400 mt-2">' + escapeHtml(p.Tanggal) + '</p>' +
         '</div>' +
-      '</div>'
-    ).join('');
+      '</div>';
+    }).join('');
     lucide.createIcons();
   } catch (err) {
     box.innerHTML = '<p class="text-red-500 text-sm">Gagal memuat pengumuman.</p>';
@@ -532,12 +610,12 @@ async function muatGaleri() {
       grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center">Belum ada foto. Tambahkan kolom Foto_URL pada berita di spreadsheet untuk menampilkan galeri.</p>';
       return;
     }
-    grid.innerHTML = list.map(g =>
-      '<figure class="relative rounded-xl overflow-hidden aspect-square card-hover">' +
+    grid.innerHTML = list.map(function (g) {
+      return '<figure class="relative rounded-xl overflow-hidden aspect-square card-hover">' +
         '<img src="' + escapeHtml(g.url) + '" alt="' + escapeHtml(g.judul) + '" loading="lazy" class="w-full h-full object-cover" onerror="this.closest(\'figure\').style.display=\'none\'" />' +
         '<figcaption class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs p-2">' + escapeHtml(g.judul) + '</figcaption>' +
-      '</figure>'
-    ).join('');
+      '</figure>';
+    }).join('');
   } catch (err) {
     grid.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Gagal memuat galeri.</p>';
   }
@@ -556,7 +634,6 @@ document.getElementById('formPPDB').addEventListener('submit', async function (e
 
   try {
     const f = e.target;
-    // Proses ketiga file (jika ada) -> kompresi lalu base64
     const files = [];
     const mapLabel = { akte: 'Akte Kelahiran', kk: 'Kartu Keluarga', foto: 'Pas Foto' };
     for (const key of ['akte', 'kk', 'foto']) {
@@ -680,25 +757,23 @@ document.getElementById('formPesan').addEventListener('submit', async function (
 document.getElementById('btnMenu').addEventListener('click', function () {
   document.getElementById('menuMobile').classList.toggle('hidden');
 });
-// Tutup menu mobile saat link diklik
-document.querySelectorAll('#menuMobile a').forEach(a =>
-  a.addEventListener('click', () => document.getElementById('menuMobile').classList.add('hidden'))
-);
-// Navbar shadow saat scroll
-window.addEventListener('scroll', () => {
+document.querySelectorAll('#menuMobile a').forEach(function (a) {
+  a.addEventListener('click', function () { document.getElementById('menuMobile').classList.add('hidden'); });
+});
+window.addEventListener('scroll', function () {
   document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10);
 });
 
-// Animasi fade-up saat elemen masuk viewport
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('tampil'); observer.unobserve(en.target); } });
+const observer = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('tampil'); observer.unobserve(en.target); } });
 }, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-up').forEach(function (el) { observer.observe(el); });
 
 /* ============================================================
-   INISIALISASI: muat data dinamis saat halaman dibuka
+   INISIALISASI: muat pengaturan + data dinamis saat halaman dibuka
    ============================================================ */
 lucide.createIcons();
+muatPengaturan();   // identitas sekolah (nama, logo, alamat, visi-misi, dll)
 muatBerita();
 muatPengumuman();
 muatGaleri();
