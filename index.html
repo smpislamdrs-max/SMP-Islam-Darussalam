@@ -687,25 +687,28 @@ document.getElementById('formPPDB').addEventListener('submit', async function (e
 /* ============================================================
    5. CEK NILAI SISWA BERDASARKAN NISN
    ============================================================ */
-/* Muat daftar tahun pelajaran & semester (dari tb_nilai_mapel) untuk dropdown */
+/* Muat daftar tahun ajaran & semester (dikendalikan dari tb_pengaturan) untuk dropdown.
+   Tahun/semester aktif otomatis terpilih sebagai default. */
 async function muatPeriode() {
   const thnEl = document.getElementById('tahunPelajaran');
   const smtEl = document.getElementById('semester');
   try {
     const hasil = await apiGet({ action: 'daftarPeriode' });
-    const list = (hasil && hasil.data) || [];
-    if (!list.length) {
+    const tahun = (hasil && hasil.tahun_ajaran) || [];
+    const smt = (hasil && hasil.semester) || [];
+
+    if (!tahun.length) {
       thnEl.innerHTML = '<option value="">Belum ada data</option>';
-      smtEl.innerHTML = '<option value="">Belum ada data</option>';
-      return;
+    } else {
+      thnEl.innerHTML = tahun.map(function (t) { return '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>'; }).join('');
+      if (hasil && hasil.tahun_aktif) thnEl.value = hasil.tahun_aktif;
     }
-    const tahunUnik = [], smtUnik = [];
-    list.forEach(function (p) {
-      if (tahunUnik.indexOf(p.tahun_pelajaran) === -1) tahunUnik.push(p.tahun_pelajaran);
-      if (smtUnik.indexOf(p.semester) === -1) smtUnik.push(p.semester);
-    });
-    thnEl.innerHTML = tahunUnik.map(function (t) { return '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>'; }).join('');
-    smtEl.innerHTML = smtUnik.map(function (s) { return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + '</option>'; }).join('');
+    if (!smt.length) {
+      smtEl.innerHTML = '<option value="">Belum ada data</option>';
+    } else {
+      smtEl.innerHTML = smt.map(function (s) { return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + '</option>'; }).join('');
+      if (hasil && hasil.semester_aktif) smtEl.value = hasil.semester_aktif;
+    }
   } catch (err) {
     thnEl.innerHTML = '<option value="">Gagal memuat periode</option>';
     smtEl.innerHTML = '<option value="">Gagal memuat periode</option>';
