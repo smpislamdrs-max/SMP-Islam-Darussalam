@@ -750,6 +750,7 @@ document.getElementById('formNilai').addEventListener('submit', async function (
         kartuNilai = '<p class="text-sm text-slate-400 text-center py-3 col-span-full">Belum ada nilai pada periode ini.</p>';
       }
       var rataTeks = (hasil.rata_rata != null) ? hasil.rata_rata : '-';
+      var listPeriode = (hasil.periode_lain || []).map(function (p) { return p.tahun_pelajaran + ' ' + p.semester; }).join(', ');
 
       hasilBox.innerHTML =
         '<div class="bg-white text-slate-800 rounded-2xl p-6 shadow-xl space-y-5">' +
@@ -782,6 +783,9 @@ document.getElementById('formNilai').addEventListener('submit', async function (
               '<span class="text-xs font-normal text-slate-400">Rata-rata: <span class="font-display font-bold text-brand-700 text-base">' + rataTeks + '</span></span></p>' +
             '<div class="grid sm:grid-cols-2 gap-2">' + kartuNilai + '</div>' +
           '</div>' +
+          (hasil.periode_lain && hasil.periode_lain.length
+            ? '<div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 flex items-start gap-2"><i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 mt-0.5"></i><span>Ada data nilai NISN ini juga tercatat di periode lain: <b>' + escapeHtml(listPeriode) + '</b>. Jika ada mapel yang belum muncul, berarti baris mapel itu ada di periode tersebut — perbaiki kolom Tahun_Pelajaran &amp; Semester di spreadsheet tb_nilai_mapel.</span></div>'
+            : '') +
         '</div>';
     } else {
       hasilBox.innerHTML =
