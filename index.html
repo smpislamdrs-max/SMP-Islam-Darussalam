@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SMP Islam Darussalam - Website Resmi</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Konfigurasi tema: warna sekolah (hijau emerald + aksen amber), font display Fredoka
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { 50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b' },
+          aksen: { 400:'#fbbf24',500:'#f59e0b',600:'#d97706' }
+        },
+        fontFamily: { display: ['Fredoka','ui-sans-serif','system-ui','sans-serif'] }
+      }
+    }
+  }
+</script>
+
+<!-- Google Fonts: Fredoka (tema Education/Learning) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons (SVG icon set) -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@1/dist/umd/lucide.min.js"></script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#faf9f4; font-family: ui-sans-serif, system-ui, sans-serif; }
+  .font-display { font-family:'Fredoka', ui-sans-serif, system-ui, sans-serif; }
+  /* Animasi halus */
+  .fade-up { opacity:0; transform:translateY(18px); transition:all .6s ease; }
+  .fade-up.tampil { opacity:1; transform:translateY(0); }
+  .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -10px rgba(6,95,70,.25); }
+  /* Placeholder gradien untuk gambar berita/galeri yang belum ada */
+  .img-placeholder { background: linear-gradient(135deg,#a7f3d0 0%,#fde68a 100%); }
+  /* Spinner loading */
+  .spinner { width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:putar .7s linear infinite;display:inline-block;vertical-align:middle; }
+  @keyframes putar { to { transform: rotate(360deg); } }
+</style>
+</head>
+
+<body class="text-slate-800">
+
+<!-- ===================== NAVBAR ===================== -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 transition-shadow">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="#beranda" class="flex items-center gap-2">
+      <span class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center">
+        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+      </span>
+      <span class="font-display font-semibold text-lg text-brand-800">SMP Islam<span class="text-aksen-500"> Darussalam</span></span>
+    </a>
+    <!-- Menu desktop -->
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+      <a href="#beranda" class="hover:text-brand-700 transition">Beranda</a>
+      <a href="#profil" class="hover:text-brand-700 transition">Profil</a>
+      <a href="#pengumuman" class="hover:text-brand-700 transition">Pengumuman</a>
+      <a href="#berita" class="hover:text-brand-700 transition">Berita</a>
+      <a href="#ppdb" class="hover:text-brand-700 transition">PPDB</a>
+      <a href="#nilai" class="hover:text-brand-700 transition">Cek Nilai</a>
+      <a href="#kontak" class="hover:text-brand-700 transition">Kontak</a>
+    </div>
+    <a href="#ppdb" class="hidden md:inline-flex items-center gap-1 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+      <i data-lucide="user-plus" class="w-4 h-4"></i> Daftar PPDB
+    </a>
+    <!-- Tombol menu mobile -->
+    <button id="btnMenu" class="md:hidden p-2 rounded-lg hover:bg-slate-100" aria-label="Menu">
+      <i data-lucide="menu" class="w-6 h-6 text-brand-800"></i>
+    </button>
+  </div>
+  <!-- Menu mobile -->
+  <div id="menuMobile" class="hidden md:hidden bg-white border-t border-slate-100 px-4 py-3 space-y-2 text-sm font-medium">
+    <a href="#beranda" class="block py-2 hover:text-brand-700">Beranda</a>
+    <a href="#profil" class="block py-2 hover:text-brand-700">Profil</a>
+    <a href="#pengumuman" class="block py-2 hover:text-brand-700">Pengumuman</a>
+    <a href="#berita" class="block py-2 hover:text-brand-700">Berita</a>
+    <a href="#ppdb" class="block py-2 hover:text-brand-700">PPDB Online</a>
+    <a href="#nilai" class="block py-2 hover:text-brand-700">Cek Nilai</a>
+    <a href="#kontak" class="block py-2 hover:text-brand-700">Kontak</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO / LANDING ===================== -->
+<section id="beranda" class="pt-16 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-700 via-brand-600 to-emerald-500"></div>
+  <!-- dekorasi lingkaran -->
+  <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/10"></div>
+  <div class="absolute bottom-0 left-1/3 w-56 h-56 rounded-full bg-aksen-400/20"></div>
+  <div class="relative max-w-6xl mx-auto px-4 py-20 md:py-28 text-white">
+    <p class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-sm px-4 py-1.5 rounded-full mb-5">
+      <i data-lucide="sparkles" class="w-4 h-4"></i> Penerimaan Peserta Didik Baru Tahun Ajaran 2026/2027 Dibuka
+    </p>
+    <h1 class="font-display font-bold text-4xl md:text-6xl leading-tight max-w-3xl">
+      Membangun Generasi Cerdas, Berkarakter, dan Siap Bersaing
+    </h1>
+    <p class="mt-5 text-lg text-white/85 max-w-2xl">
+      SMP Islam Darussalam menyediakan pendidikan berkualitas dengan fasilitas lengkap,
+      guru profesional, dan kurikulum berbasis teknologi.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#ppdb" class="inline-flex items-center gap-2 bg-aksen-500 hover:bg-aksen-600 text-white font-semibold px-6 py-3 rounded-full transition shadow-lg">
+        <i data-lucide="file-text" class="w-5 h-5"></i> Daftar PPDB Online
+      </a>
+      <a href="#nilai" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 font-semibold px-6 py-3 rounded-full transition">
+        <i data-lucide="search" class="w-5 h-5"></i> Cek Nilai Siswa
+      </a>
+    </div>
+    <!-- Statistik singkat -->
+    <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl">
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
+        <p class="font-display font-bold text-3xl">500+</p><p class="text-white/80 text-sm">Siswa Aktif</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
+        <p class="font-display font-bold text-3xl">40+</p><p class="text-white/80 text-sm">Guru Profesional</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
+        <p class="font-display font-bold text-3xl">15</p><p class="text-white/80 text-sm">Ekstrakurikuler</p>
+      </div>
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/15">
+        <p class="font-display font-bold text-3xl">A</p><p class="text-white/80 text-sm">Akreditasi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROFIL + VISI MISI ===================== -->
+<section id="profil" class="py-16 md:py-20">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 fade-up">
+      <p class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Tentang Kami</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Profil Sekolah</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm card-hover fade-up">
+        <span class="w-12 h-12 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center mb-4">
+          <i data-lucide="school" class="w-6 h-6"></i>
+        </span>
+        <h3 class="font-display font-semibold text-xl mb-2">Tentang Sekolah</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          Berdiri sejak 2004, SMP Islam Darussalam berkomitmen menghadirkan pendidikan
+          holistik yang memadukan ilmu pengetahuan, teknologi, dan pembentukan karakter mulia.
+        </p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm card-hover fade-up">
+        <span class="w-12 h-12 rounded-xl bg-aksen-400/20 text-aksen-600 flex items-center justify-center mb-4">
+          <i data-lucide="eye" class="w-6 h-6"></i>
+        </span>
+        <h3 class="font-display font-semibold text-xl mb-2">Visi</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          Menjadi sekolah unggulan yang menghasilkan lulusan beriman, cerdas, terampil,
+          dan berwawasan global untuk menghadapi tantangan masa depan.
+        </p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm card-hover fade-up">
+        <span class="w-12 h-12 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center mb-4">
+          <i data-lucide="target" class="w-6 h-6"></i>
+        </span>
+        <h3 class="font-display font-semibold text-xl mb-2">Misi</h3>
+        <ul class="text-slate-600 text-sm leading-relaxed list-disc pl-5 space-y-1">
+          <li>Menyelenggarakan pembelajaran aktif dan kreatif.</li>
+          <li>Mengembangkan potensi akademik & non-akademik siswa.</li>
+          <li>Menanamkan nilai-nilai karakter dan religius.</li>
+          <li>Memanfaatkan teknologi dalam proses belajar.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PENGUMUMAN ===================== -->
+<section id="pengumuman" class="py-16 bg-white border-y border-slate-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-end justify-between mb-8 fade-up">
+      <div>
+        <p class="text-aksen-600 font-semibold text-sm tracking-widest uppercase">Informasi Penting</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Pengumuman Sekolah</h2>
+      </div>
+      <i data-lucide="megaphone" class="w-10 h-10 text-aksen-400 hidden sm:block"></i>
+    </div>
+    <div id="listPengumuman" class="space-y-3">
+      <p class="text-slate-400 text-sm">Memuat pengumuman...</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BERITA / ARTIKEL ===================== -->
+<section id="berita" class="py-16 md:py-20">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-10 fade-up">
+      <p class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Kabar Terkini</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Berita & Artikel</h2>
+    </div>
+    <div id="gridBerita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <p class="text-slate-400 text-sm col-span-full text-center">Memuat berita...</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GALERI ===================== -->
+<section id="galeri" class="py-16 bg-white border-y border-slate-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-10 fade-up">
+      <p class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Dokumentasi</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Galeri Kegiatan</h2>
+      <p class="text-slate-500 text-sm mt-2">Foto diambil dari kolom Foto_URL pada berita. Tambahkan URL foto di spreadsheet untuk tampil di sini.</p>
+    </div>
+    <div id="gridGaleri" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <p class="text-slate-400 text-sm col-span-full text-center">Memuat galeri...</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PPDB ONLINE ===================== -->
+<section id="ppdb" class="py-16 md:py-20">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-10 fade-up">
+      <p class="text-aksen-600 font-semibold text-sm tracking-widest uppercase">Penerimaan Peserta Didik Baru</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Formulir Pendaftaran Online</h2>
+      <p class="text-slate-500 text-sm mt-2">Isi data diri dan unggah dokumen pendukung. Ukuran file maksimal 5 MB per file.</p>
+    </div>
+
+    <form id="formPPDB" class="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm space-y-5">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">NISN <span class="text-red-500">*</span></label>
+          <input name="nisn" required type="text" inputmode="numeric" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="Nomor Induk Siswa Nasional" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+          <input name="nama" required type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="Nama lengkap calon siswa" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+          <input name="email" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="smpislamdrs@gmail.com" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">No. HP / WhatsApp</label>
+          <input name="nohp" type="tel" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="085846294736" />
+        </div>
+      </div>
+
+      <!-- Upload dokumen -->
+      <div class="border-t border-slate-100 pt-5">
+        <p class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+          <i data-lucide="upload-cloud" class="w-4 h-4 text-brand-600"></i> Unggah Dokumen Pendukung (opsional)
+        </p>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">Akte Kelahiran</label>
+            <input type="file" name="akte" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">Kartu Keluarga</label>
+            <input type="file" name="kk" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">Pas Foto (3x4)</label>
+            <input type="file" name="foto" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Format: PDF / JPG / PNG. Foto akan dikompresi otomatis agar ukuran tetap ringan.</p>
+      </div>
+
+      <button type="submit" id="btnPPDB" class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition">
+        <i data-lucide="send" class="w-4 h-4"></i> Kirim Pendaftaran
+      </button>
+      <p id="pesanPPDB" class="hidden text-sm text-center rounded-lg px-4 py-2.5"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== PORTAL CEK NILAI & ABSENSI ===================== -->
+<section id="nilai" class="py-16 bg-gradient-to-br from-brand-800 to-brand-600 text-white">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-8 fade-up">
+      <p class="text-aksen-400 font-semibold text-sm tracking-widest uppercase">Portal Siswa</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">Cek Nilai & Absensi</h2>
+      <p class="text-white/75 text-sm mt-2">Masukkan NISN siswa untuk melihat data nilai ujian dan persentase kehadiran. <br/>Demo: <span class="font-mono bg-white/15 px-2 py-0.5 rounded">2024001</span> / <span class="font-mono bg-white/15 px-2 py-0.5 rounded">2024002</span> / <span class="font-mono bg-white/15 px-2 py-0.5 rounded">2024003</span></p>
+    </div>
+    <form id="formNilai" class="flex flex-col sm:flex-row gap-3">
+      <input name="nisn" required type="text" placeholder="Masukkan NISN, contoh: 2024001"
+        class="flex-1 rounded-xl px-4 py-3 text-slate-800 outline-none focus:ring-4 focus:ring-white/30" />
+      <button type="submit" id="btnNilai" class="inline-flex items-center justify-center gap-2 bg-aksen-500 hover:bg-aksen-600 font-semibold px-6 py-3 rounded-xl transition">
+        <i data-lucide="search" class="w-4 h-4"></i> Cek Data
+      </button>
+    </form>
+    <div id="hasilNilai" class="mt-6"></div>
+  </div>
+</section>
+
+<!-- ===================== KONTAK / KRITIK SARAN ===================== -->
+<section id="kontak" class="py-16 md:py-20">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10">
+    <div class="fade-up">
+      <p class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Hubungi Kami</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Kritik & Saran</h2>
+      <p class="text-slate-500 mt-3 text-sm leading-relaxed">
+        Sampaikan pesan, kritik, atau saran Anda kepada pihak sekolah. Setiap masukan
+        akan kami terima dengan baik untuk kemajuan bersama.
+      </p>
+      <div class="mt-6 space-y-4 text-sm">
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="map-pin" class="w-4 h-4"></i></span> Blok Sindanghurip RT 002 RW 004 Desa Maniis Kec. Cingambul Kab. Majalengka - Jawa Barat</p>
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4"></i></span> (021) 555-1234</p>
+        <p class="flex items-center gap-3 text-slate-600"><span class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="mail" class="w-4 h-4"></i></span> info@sekolahmodern.sch.id</p>
+      </div>
+    </div>
+
+    <form id="formPesan" class="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm space-y-4 fade-up">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Nama <span class="text-red-500">*</span></label>
+        <input name="nama" required type="text" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="Nama Anda" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+        <input name="email" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="email@contoh.com" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Pesan / Kritik & Saran <span class="text-red-500">*</span></label>
+        <textarea name="pesan" required rows="4" class="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none" placeholder="Tulis pesan Anda di sini..."></textarea>
+      </div>
+      <button type="submit" id="btnPesan" class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition">
+        <i data-lucide="send" class="w-4 h-4"></i> Kirim Pesan
+      </button>
+      <p id="pesanKontak" class="hidden text-sm text-center rounded-lg px-4 py-2.5"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="bg-slate-900 text-slate-300 py-10">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4"></i></span>
+        <span class="font-display font-semibold text-white">SMP Islam Darussalam</span>
+      </div>
+      <p class="text-slate-400 leading-relaxed">Membangun generasi cerdas dan berkarakter melalui pendidikan berkualitas.</p>
+    </div>
+    <div>
+      <p class="font-semibold text-white mb-3">Navigasi</p>
+      <ul class="space-y-2 text-slate-400">
+        <li><a href="#profil" class="hover:text-white transition">Profil Sekolah</a></li>
+        <li><a href="#ppdb" class="hover:text-white transition">PPDB Online</a></li>
+        <li><a href="#nilai" class="hover:text-white transition">Portal Nilai Siswa</a></li>
+        <li><a href="#kontak" class="hover:text-white transition">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold text-white mb-3">Jam Operasional</p>
+      <p class="text-slate-400">Senin - Jumat: 07.00 - 16.00 WIB</p>
+      <p class="text-slate-400">Sabtu: 07.00 - 12.00 WIB</p>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-4 mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+    &copy; 2026 SMP Islam Darussalam. Dibangun dengan Google Apps Script & GitHub Pages.
+  </div>
+</footer>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+/* ============================================================
+   KONFIGURASI UTAMA - TEMPEL URL WEB APP GAS ANDA DI SINI
+   ============================================================ */
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz1I39TmVi8YqXUemUOCIEtCnT-pu59yzPe-AY12q5x-TKZCz96Pir4MZ9_uXDkMd1m/exec';
+
+/* ------------------------------------------------------------
+   Helper: escape HTML agar data dari API aman dari XSS
+   ------------------------------------------------------------ */
+function escapeHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+/* ------------------------------------------------------------
+   Helper: panggil API GET ke GAS
+   ------------------------------------------------------------ */
+async function apiGet(params) {
+  const url = WEB_APP_URL + '?' + new URLSearchParams(params);
+  const res = await fetch(url);
+  return res.json();
+}
+
+/* ------------------------------------------------------------
+   Helper: panggil API POST ke GAS.
+   Pakai Content-Type: text/plain agar browser TIDAK mengirim
+   preflight OPTIONS (yang tidak didukung oleh Apps Script).
+   ------------------------------------------------------------ */
+async function apiPost(payload) {
+  const res = await fetch(WEB_APP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+/* ------------------------------------------------------------
+   Helper: ubah File -> base64 (tanpa prefix data:...)
+   ------------------------------------------------------------ */
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ------------------------------------------------------------
+   Helper: kompresi gambar (untuk file berukuran besar)
+   Mengubah gambar ke canvas lalu di-resize max 1200px,
+   dikonversi ke JPEG kualitas 80% -> ukuran jauh lebih kecil.
+   Mengembalikan {base64, tipe, nama}. File non-gambar (PDF)
+   dikonversi apa adanya dengan batas 5 MB.
+   ------------------------------------------------------------ */
+const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5 MB
+
+async function prosesFile(file, label) {
+  if (!file) return null;
+  if (file.size > MAX_FILE_BYTES && !file.type.startsWith('image/')) {
+    throw new Error('File ' + label + ' terlalu besar (>5 MB).');
+  }
+  if (file.type.startsWith('image/')) {
+    // Kompresi gambar via canvas
+    const dataUrl = await new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const max = 1200;
+        let w = img.width, h = img.height;
+        if (w > max || h > max) {
+          if (w > h) { h = Math.round(h * max / w); w = max; }
+          else { w = Math.round(w * max / h); h = max; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Gagal membaca gambar.')); };
+      img.src = url;
+    });
+    return { label, nama: label.toLowerCase().replace(/\s+/g,'_') + '.jpg', tipe: 'image/jpeg', base64: dataUrl.split(',')[1] };
+  } else {
+    // PDF / dokumen lain -> base64 langsung
+    const b64 = await fileToBase64(file);
+    return { label, nama: file.name, tipe: file.type || 'application/octet-stream', base64: b64 };
+  }
+}
+
+/* ------------------------------------------------------------
+   Tampilkan pesan sukses/error di bawah form
+   ------------------------------------------------------------ */
+function tampilkanPesan(el, teks, sukses) {
+  el.textContent = teks;
+  el.classList.remove('hidden', 'bg-green-50', 'text-green-700', 'bg-red-50', 'text-red-600');
+  el.classList.add(sukses ? 'bg-green-50' : 'bg-red-50', sukses ? 'text-green-700' : 'text-red-600');
+}
+
+/* ============================================================
+   1. MUAT BERITA
+   ============================================================ */
+async function muatBerita() {
+  const grid = document.getElementById('gridBerita');
+  try {
+    const hasil = await apiGet({ action: 'berita' });
+    const list = (hasil && hasil.data) || [];
+    if (!list.length) { grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center">Belum ada berita.</p>'; return; }
+    grid.innerHTML = list.map(b => {
+      const foto = b.Foto_URL && String(b.Foto_URL).trim();
+      const media = foto
+        ? '<img src="' + escapeHtml(foto) + '" alt="" loading="lazy" class="w-full h-44 object-cover" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" /><div class="img-placeholder w-full h-44 items-center justify-center hidden"><i data-lucide="image" class="w-8 h-8 text-white/70"></i></div>'
+        : '<div class="img-placeholder w-full h-44 flex items-center justify-center"><i data-lucide="newspaper" class="w-8 h-8 text-white/70"></i></div>';
+      return '<article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm card-hover">' +
+        media +
+        '<div class="p-5">' +
+          '<span class="inline-flex items-center gap-1 text-xs text-brand-600 bg-brand-50 px-2.5 py-1 rounded-full mb-2"><i data-lucide="calendar" class="w-3 h-3"></i> ' + escapeHtml(b.Tanggal) + '</span>' +
+          '<h3 class="font-display font-semibold text-lg text-slate-900 mb-2">' + escapeHtml(b.Judul) + '</h3>' +
+          '<p class="text-slate-500 text-sm leading-relaxed line-clamp-3">' + escapeHtml(b.Konten) + '</p>' +
+        '</div></article>';
+    }).join('');
+    lucide.createIcons();
+  } catch (err) {
+    grid.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Gagal memuat berita. Periksa koneksi atau WEB_APP_URL.</p>';
+  }
+}
+
+/* ============================================================
+   2. MUAT PENGUMUMAN
+   ============================================================ */
+async function muatPengumuman() {
+  const box = document.getElementById('listPengumuman');
+  try {
+    const hasil = await apiGet({ action: 'pengumuman' });
+    const list = (hasil && hasil.data) || [];
+    if (!list.length) { box.innerHTML = '<p class="text-slate-400 text-sm">Belum ada pengumuman aktif.</p>'; return; }
+    box.innerHTML = list.map(p =>
+      '<div class="flex items-start gap-4 bg-amber-50/60 border border-amber-100 rounded-xl p-4">' +
+        '<span class="w-10 h-10 shrink-0 rounded-lg bg-aksen-400/20 text-aksen-600 flex items-center justify-center"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>' +
+        '<div>' +
+          '<h3 class="font-semibold text-slate-900">' + escapeHtml(p.Judul) + '</h3>' +
+          '<p class="text-slate-600 text-sm mt-1 leading-relaxed">' + escapeHtml(p.Isi) + '</p>' +
+          '<p class="text-xs text-slate-400 mt-2">' + escapeHtml(p.Tanggal) + '</p>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+    lucide.createIcons();
+  } catch (err) {
+    box.innerHTML = '<p class="text-red-500 text-sm">Gagal memuat pengumuman.</p>';
+  }
+}
+
+/* ============================================================
+   3. MUAT GALERI
+   ============================================================ */
+async function muatGaleri() {
+  const grid = document.getElementById('gridGaleri');
+  try {
+    const hasil = await apiGet({ action: 'galeri' });
+    const list = (hasil && hasil.data) || [];
+    if (!list.length) {
+      grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center">Belum ada foto. Tambahkan kolom Foto_URL pada berita di spreadsheet untuk menampilkan galeri.</p>';
+      return;
+    }
+    grid.innerHTML = list.map(g =>
+      '<figure class="relative rounded-xl overflow-hidden aspect-square card-hover">' +
+        '<img src="' + escapeHtml(g.url) + '" alt="' + escapeHtml(g.judul) + '" loading="lazy" class="w-full h-full object-cover" onerror="this.closest(\'figure\').style.display=\'none\'" />' +
+        '<figcaption class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs p-2">' + escapeHtml(g.judul) + '</figcaption>' +
+      '</figure>'
+    ).join('');
+  } catch (err) {
+    grid.innerHTML = '<p class="text-red-500 text-sm col-span-full text-center">Gagal memuat galeri.</p>';
+  }
+}
+
+/* ============================================================
+   4. SUBMIT FORM PPDB (termasuk upload dokumen)
+   ============================================================ */
+document.getElementById('formPPDB').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnPPDB');
+  const pesan = document.getElementById('pesanPPDB');
+  pesan.classList.add('hidden');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Memproses...';
+
+  try {
+    const f = e.target;
+    // Proses ketiga file (jika ada) -> kompresi lalu base64
+    const files = [];
+    const mapLabel = { akte: 'Akte Kelahiran', kk: 'Kartu Keluarga', foto: 'Pas Foto' };
+    for (const key of ['akte', 'kk', 'foto']) {
+      const fileInput = f.querySelector('input[name="' + key + '"]');
+      if (fileInput && fileInput.files[0]) {
+        const hasil = await prosesFile(fileInput.files[0], mapLabel[key]);
+        if (hasil) files.push(hasil);
+      }
+    }
+
+    const hasil = await apiPost({
+      action: 'ppdb',
+      nisn: f.nisn.value.trim(),
+      nama: f.nama.value.trim(),
+      email: f.email.value.trim(),
+      nohp: f.nohp.value.trim(),
+      files: files
+    });
+
+    if (hasil && hasil.status === 'sukses') {
+      tampilkanPesan(pesan, hasil.pesan || 'Pendaftaran berhasil!', true);
+      f.reset();
+    } else {
+      tampilkanPesan(pesan, (hasil && hasil.pesan) || 'Gagal mengirim pendaftaran.', false);
+    }
+  } catch (err) {
+    tampilkanPesan(pesan, 'Kesalahan: ' + err.message, false);
+  } finally {
+    pesan.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Kirim Pendaftaran';
+    lucide.createIcons();
+  }
+});
+
+/* ============================================================
+   5. CEK NILAI SISWA BERDASARKAN NISN
+   ============================================================ */
+document.getElementById('formNilai').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnNilai');
+  const hasilBox = document.getElementById('hasilNilai');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Mencari...';
+  hasilBox.innerHTML = '';
+
+  try {
+    const nisn = e.target.nisn.value.trim();
+    const hasil = await apiGet({ action: 'cekNilai', nisn: nisn });
+
+    if (hasil && hasil.ditemukan) {
+      const d = hasil.data;
+      hasilBox.innerHTML =
+        '<div class="bg-white text-slate-800 rounded-2xl p-6 shadow-xl">' +
+          '<div class="flex items-center gap-3 mb-4">' +
+            '<span class="w-12 h-12 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center"><i data-lucide="user-check" class="w-6 h-6"></i></span>' +
+            '<div><h3 class="font-display font-bold text-xl">' + escapeHtml(d.Nama) + '</h3>' +
+            '<p class="text-sm text-slate-500">NISN: ' + escapeHtml(d.NISN) + ' &middot; Kelas ' + escapeHtml(d.Kelas) + '</p></div>' +
+          '</div>' +
+          '<div class="grid grid-cols-2 gap-3">' +
+            '<div class="bg-brand-50 rounded-xl p-4 text-center"><p class="text-xs text-slate-500 uppercase tracking-wide">Nilai Ujian</p><p class="font-display font-bold text-3xl text-brand-700 mt-1">' + escapeHtml(d.Nilai_Ujian) + '</p></div>' +
+            '<div class="bg-aksen-400/15 rounded-xl p-4 text-center"><p class="text-xs text-slate-500 uppercase tracking-wide">Absensi</p><p class="font-display font-bold text-3xl text-aksen-600 mt-1">' + escapeHtml(d.Absensi) + '</p></div>' +
+          '</div>' +
+        '</div>';
+    } else {
+      hasilBox.innerHTML =
+        '<div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-center">' +
+          '<i data-lucide="alert-circle" class="w-8 h-8 mx-auto mb-2 text-aksen-400"></i>' +
+          '<p class="font-medium">' + escapeHtml((hasil && hasil.pesan) || 'NISN tidak ditemukan.') + '</p>' +
+          '<p class="text-white/70 text-sm mt-1">Coba NISN demo: 2024001 / 2024002 / 2024003</p>' +
+        '</div>';
+    }
+    lucide.createIcons();
+  } catch (err) {
+    hasilBox.innerHTML = '<p class="text-center text-white/80 bg-white/10 rounded-xl p-4">Gagal terhubung ke server. Periksa WEB_APP_URL.</p>';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="search" class="w-4 h-4"></i> Cek Data';
+    lucide.createIcons();
+  }
+});
+
+/* ============================================================
+   6. SUBMIT FORM KONTAK / KRITIK SARAN
+   ============================================================ */
+document.getElementById('formPesan').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnPesan');
+  const pesanBox = document.getElementById('pesanKontak');
+  pesanBox.classList.add('hidden');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Mengirim...';
+
+  try {
+    const f = e.target;
+    const hasil = await apiPost({
+      action: 'pesan',
+      nama: f.nama.value.trim(),
+      email: f.email.value.trim(),
+      pesan: f.pesan.value.trim()
+    });
+    if (hasil && hasil.status === 'sukses') {
+      tampilkanPesan(pesanBox, hasil.pesan || 'Pesan terkirim!', true);
+      f.reset();
+    } else {
+      tampilkanPesan(pesanBox, (hasil && hasil.pesan) || 'Gagal mengirim pesan.', false);
+    }
+  } catch (err) {
+    tampilkanPesan(pesanBox, 'Kesalahan: ' + err.message, false);
+  } finally {
+    pesanBox.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Kirim Pesan';
+    lucide.createIcons();
+  }
+});
+
+/* ============================================================
+   NAVIGASI MOBILE + EFEK SCROLL
+   ============================================================ */
+document.getElementById('btnMenu').addEventListener('click', function () {
+  document.getElementById('menuMobile').classList.toggle('hidden');
+});
+// Tutup menu mobile saat link diklik
+document.querySelectorAll('#menuMobile a').forEach(a =>
+  a.addEventListener('click', () => document.getElementById('menuMobile').classList.add('hidden'))
+);
+// Navbar shadow saat scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10);
+});
+
+// Animasi fade-up saat elemen masuk viewport
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('tampil'); observer.unobserve(en.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ============================================================
+   INISIALISASI: muat data dinamis saat halaman dibuka
+   ============================================================ */
+lucide.createIcons();
+muatBerita();
+muatPengumuman();
+muatGaleri();
+</script>
+</body>
+</html>
