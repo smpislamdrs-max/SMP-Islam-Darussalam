@@ -242,7 +242,7 @@
     <div class="text-center mb-10 fade-up">
       <p class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Dokumentasi Video</p>
       <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-900 mt-2">Galeri Video Kegiatan</h2>
-      <p class="text-slate-500 text-sm mt-2">Video dari YouTube, dikelola melalui sheet <span class="font-mono bg-slate-100 px-1.5 py-0.5 rounded">tb_video</span> (kolom URL_Youtube).</p>
+      <p class="text-slate-500 text-sm mt-2">Video dari <b>YouTube</b> dan <b>Google Drive</b>, dikelola melalui sheet <span class="font-mono bg-slate-100 px-1.5 py-0.5 rounded">tb_video</span> (kolom URL_Youtube — sistem otomatis mendeteksi jenis link).</p>
     </div>
     <div id="gridVideo" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <p class="text-slate-400 text-sm col-span-full text-center">Memuat video...</p>
@@ -420,7 +420,7 @@
 /* ============================================================
    KONFIGURASI UTAMA - TEMPEL URL WEB APP GAS ANDA DI SINI
    ============================================================ */
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz1I39TmVi8YqXUemUOCIEtCnT-pu59yzPe-AY12q5x-TKZCz96Pir4MZ9_uXDkMd1m/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_WEB_APP_ANDA/exec';
 
 /* ------------------------------------------------------------
    Helper: escape HTML agar data dari API aman dari XSS
@@ -713,6 +713,14 @@ function youtubeId(url) {
   return /^[A-Za-z0-9_-]{11}$/.test(u) ? u : null;
 }
 
+/* Ekstrak ID file Google Drive dari berbagai format URL:
+   drive.google.com/file/d/ID/view, /preview, open?id=ID, uc?id=ID */
+function driveId(url) {
+  const u = String(url || '').trim();
+  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([a-zA-Z0-9_-]+)/);
+  return m ? m[1] : null;
+}
+
 /* ============================================================
    3b. MUAT VIDEO YOUTUBE (dari tb_video)
    ============================================================ */
@@ -726,13 +734,18 @@ async function muatVideo() {
       return;
     }
     grid.innerHTML = list.slice(0, 6).map(function (v) {
-      // Kompatibel dengan nama kolom URL_Youtube / YouTube_URL
+      // Kompatibel dengan nama kolom URL_Youtube / YouTube_URL.
+      // Deteksi otomatis: link YouTube -> embed YouTube; link Google Drive -> embed preview Drive.
       const url = v.URL_Youtube || v.YouTube_URL || v.url || '';
-      const id = youtubeId(url);
-      if (!id) return ''; // lewati jika URL tidak valid
+      const yt = youtubeId(url);
+      const drv = driveId(url);
+      let embedSrc = '';
+      if (yt) embedSrc = 'https://www.youtube-nocookie.com/embed/' + yt;
+      else if (drv) embedSrc = 'https://drive.google.com/file/d/' + drv + '/preview';
+      if (!embedSrc) return ''; // lewati jika bukan link YouTube / Drive yang valid
       return '<div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm card-hover">' +
         '<div class="aspect-video bg-black">' +
-          '<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + id + '" title="' + escapeHtml(v.Judul) + '" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+          '<iframe class="w-full h-full" src="' + embedSrc + '" title="' + escapeHtml(v.Judul) + '" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
         '</div>' +
         '<div class="p-4">' +
           '<h3 class="font-semibold text-slate-800 text-sm leading-snug">' + escapeHtml(v.Judul) + '</h3>' +
