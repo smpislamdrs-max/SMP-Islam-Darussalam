@@ -284,8 +284,16 @@
             <label class="block text-xs font-medium text-slate-600 mb-1">Pas Foto (3x4)</label>
             <input type="file" name="foto" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
           </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">Ijazah <span class="text-slate-400">(opsional)</span></label>
+            <input type="file" name="ijazah" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">KTP Orang Tua <span class="text-slate-400">(opsional)</span></label>
+            <input type="file" name="ktp_ortu" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100" />
+          </div>
         </div>
-        <p class="text-xs text-slate-400 mt-2">Format: PDF / JPG / PNG. Foto akan dikompresi otomatis agar ukuran tetap ringan.</p>
+        <p class="text-xs text-slate-400 mt-2">Dokumen: Akte, KK, Pas Foto, Ijazah, KTP Orang Tua. Format PDF / JPG / PNG. Gambar dikompresi otomatis agar ukuran tetap ringan.</p>
       </div>
 
       <button type="submit" id="btnPPDB" class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition">
@@ -729,8 +737,8 @@ document.getElementById('formPPDB').addEventListener('submit', async function (e
   try {
     const f = e.target;
     const files = [];
-    const mapLabel = { akte: 'Akte Kelahiran', kk: 'Kartu Keluarga', foto: 'Pas Foto' };
-    for (const key of ['akte', 'kk', 'foto']) {
+    const mapLabel = { akte: 'Akte Kelahiran', kk: 'Kartu Keluarga', foto: 'Pas Foto', ijazah: 'Ijazah', ktp_ortu: 'KTP Orang Tua' };
+    for (const key of ['akte', 'kk', 'foto', 'ijazah', 'ktp_ortu']) {
       const fileInput = f.querySelector('input[name="' + key + '"]');
       if (fileInput && fileInput.files[0]) {
         const hasil = await prosesFile(fileInput.files[0], mapLabel[key]);
